@@ -31,7 +31,6 @@ const NotesByTag = async ({ params }: Props) => {
 
   return (
     <div>
-      {/* <h1>Notes List filtered by: {tag}</h1> */}
       <Notes initialData={initialData} initialTag={filterTag} />
     </div>
   );
