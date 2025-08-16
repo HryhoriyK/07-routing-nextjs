@@ -9,16 +9,17 @@ import type { FetchNotesResponse } from '@/lib/api';
 import { SearchBox } from '@/components/SearchBox/SearchBox';
 import { Pagination } from '@/components/Pagination/Pagination';
 import { NoteList } from '@/components/NoteList/NoteList';
-import { Modal } from '@/components/Modal/Modal';
+import {Modal} from '@/components/Modal/Modal';
 import { NoteForm } from '@/components/NoteForm/NoteForm';
 
 import css from './page.module.css';
 
 interface NotesProps {
   initialData: FetchNotesResponse;
+  initialTag?: string;
 }
 
-export default function Notes({ initialData }: NotesProps) {
+export default function Notes({ initialData, initialTag }: NotesProps) {
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 300);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,10 +28,10 @@ export default function Notes({ initialData }: NotesProps) {
   const perPage = 12;
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', currentPage, debouncedSearch],
-    queryFn: () => fetchNotes(currentPage, perPage, debouncedSearch),
-    placeholderData: initialData,
+    queryKey: ['notes', currentPage, debouncedSearch, initialTag],
+    queryFn: () => fetchNotes(currentPage, perPage, initialTag, debouncedSearch),
     initialData,
+    placeholderData: initialData,
   });
 
   return (

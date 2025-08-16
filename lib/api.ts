@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Note } from '../types/note'
+import type { Note } from '../types/note';
 
 axios.defaults.baseURL = 'https://notehub-public.goit.study/api';
 axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`;
@@ -25,12 +25,23 @@ export interface DeleteNoteResponse {
   note: Note;
 }
 
+export interface Tag {
+  id: string; 
+  name: string; 
+}
+
 export const fetchNotes = async (
   page: number,
   perPage: number,
+  tag?: string,
   search?: string
 ): Promise<FetchNotesResponse> => {
-  const params = { page, perPage, ...(search ? { search } : {}) };
+  const params = {
+    page,
+    perPage,
+    ...(tag ? { tag } : {}),
+    ...(search ? { search } : {}),
+  };
 
   const res = await axios.get<FetchNotesResponse>('/notes', { params });
   return res.data;
@@ -59,4 +70,13 @@ export const deleteNote = async (id: string): Promise<DeleteNoteResponse> => {
 export const fetchNoteById = async (id: string) => {
   const res = await axios.get<Note>(`/notes/${id}`);
   return res.data;
+};
+
+export const getTags = async (): Promise<Tag[]> => {
+  const res = await axios.get<FetchNotesResponse>('/notes');
+  const allNotes = res.data.notes;
+  const uniqueTagNames = [...new Set(allNotes.map(note => note.tag))];
+  const tags = uniqueTagNames.map(tagName => ({ id: tagName, name: tagName }));
+
+  return tags;
 };
