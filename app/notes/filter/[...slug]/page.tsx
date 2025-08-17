@@ -7,8 +7,9 @@ interface Props {
   params: { slug: string[] };
 }
 
-const NotesByTag = async ({ params }: Props) => {
-  const { slug } = await params;
+const NotesByTag = async (props: Promise<Props>) => {
+  const { params } = await props;
+  const { slug } = params;
   const [tag] = slug || [];
 
   if (!tag) {
