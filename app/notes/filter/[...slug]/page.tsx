@@ -1,21 +1,15 @@
+
 import { fetchNotes } from '@/lib/api';
 import type { FetchNotesResponse } from '@/lib/api';
-import { notFound } from 'next/navigation';
 import Notes from './Notes.client';
 
-type Props = {
+interface Props {
   params: Promise<{ slug: string[] }>;
-};
+}
 
 const NotesByTag = async ({ params }: Props) => {
   const { slug } = await params;
-  const [tag] = slug || [];
-
-  if (!tag) {
-    notFound();
-  }
-
-  const filterTag = tag === 'all' ? undefined : tag;
+  const tag = slug[0] === 'all' ? undefined : slug[0];
 
   let initialData: FetchNotesResponse = {
     notes: [],
@@ -24,14 +18,13 @@ const NotesByTag = async ({ params }: Props) => {
   };
   
   try {
-    initialData = await fetchNotes(1, 12, filterTag);
+    initialData = await fetchNotes(1, 12, tag);
   } catch (error) {
-    console.error('Failed to fetch notes for tag:', filterTag, error);
+    console.error('Failed to fetch notes for tag:', tag, error);
   }
-
   return (
     <div>
-      <Notes initialData={initialData} initialTag={filterTag} />
+      <Notes initialData={initialData} initialTag={tag} />
     </div>
   );
 };

@@ -25,10 +25,10 @@ export interface DeleteNoteResponse {
   note: Note;
 }
 
-export interface Tag {
-  id: string; 
-  name: string; 
-}
+// export interface Tag {
+//   id: string; 
+//   name: string; 
+// }
 
 export const fetchNotes = async (
   page: number,
@@ -72,7 +72,16 @@ export const fetchNoteById = async (id: string) => {
   return res.data;
 };
 
-export const getTags = async (): Promise<Tag[]> => {
+export type Tag = {
+  id: string,
+  title: string,
+  content: string,
+  createdAt: string,
+  updatedAt: string,
+  tag: string,
+}
+
+export const getTags = async () => {
   const res = await axios.get<FetchNotesResponse>('/notes');
   const allNotes = res.data.notes;
   const uniqueTagNames = [...new Set(allNotes.map(note => note.tag))];

@@ -25,13 +25,13 @@ const TagsMenu = ({ tags }: Props) => {
       {isOpen && (
         <ul className={css.menuList}>
           <li key="all-notes" className={css.menuItem}>
-            <Link href={"/notes/filter/all"} className={css.menuLink}>
+            <Link href={"/notes/filter/all"} onClick={toggle} className={css.menuLink}>
               All notes
             </Link>
           </li>
           {tags.map((tag) => (
             <li key={tag.id} className={css.menuItem}>
-              <Link href={`/notes/filter/${tag.name}`} className={css.menuLink}>
+              <Link href={`/notes/filter/${tag.name}`} onClick={toggle} className={css.menuLink}>
                 {tag.name}
               </Link>
             </li>
