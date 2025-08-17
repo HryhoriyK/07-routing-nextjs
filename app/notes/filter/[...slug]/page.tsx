@@ -24,7 +24,7 @@ const NotesByTag = async ({ params }: Props) => {
   }
   return (
     <div>
-      <Notes initialData={initialData} initialTag={tag} />
+      <Notes initialData={initialData} tag={tag} />
     </div>
   );
 };
