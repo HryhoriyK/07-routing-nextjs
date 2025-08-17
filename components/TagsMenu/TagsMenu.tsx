@@ -25,7 +25,7 @@ const TagsMenu = ({ tags }: Props) => {
       {isOpen && (
         <ul className={css.menuList}>
           <li key="all-notes" className={css.menuItem}>
-            <Link href={"/notes/filter/all"} onClick={toggle} className={css.menuLink}>
+            <Link href={"/notes/filter/All"} onClick={toggle} className={css.menuLink}>
               All notes
             </Link>
           </li>

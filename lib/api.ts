@@ -25,11 +25,6 @@ export interface DeleteNoteResponse {
   note: Note;
 }
 
-// export interface Tag {
-//   id: string; 
-//   name: string; 
-// }
-
 export const fetchNotes = async (
   page: number,
   perPage: number,
