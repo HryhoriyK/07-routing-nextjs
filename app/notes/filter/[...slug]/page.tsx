@@ -3,12 +3,13 @@ import type { FetchNotesResponse } from '@/lib/api';
 import { notFound } from 'next/navigation';
 import Notes from './Notes.client';
 
-interface Props {
-  params: { slug: string[] };
-}
+type Props = {
+  params: Promise<{ slug: string[] }>;
+};
 
 const NotesByTag = async ({ params }: Props) => {
-  const [tag] = params.slug || [];
+  const { slug } = await params;
+  const [tag] = slug || [];
 
   if (!tag) {
     notFound();
